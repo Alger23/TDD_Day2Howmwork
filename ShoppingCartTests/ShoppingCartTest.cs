@@ -59,9 +59,29 @@ namespace ShoppingCartTests
 
         internal decimal GetTotalPrice()
         {
-            return _cart.Sum(books => books.Amount * books.Info.Price);
+            var booksSets = new List<BooksSet>();
+            foreach (var books in _cart)
+            {
+                for (int i = 0; i < books.Amount; i++)
+                {
+                    if (booksSets.Count <= i) booksSets.Add(new BooksSet());
+                    var bookSet = booksSets[i];
+                    bookSet.Add(books.Info);
+                }
+            }
+
+            return booksSets.Sum(booksSet=> booksSet.GetTotalPrice());
+        }
+
+        private class BooksSet: List<BookInfo>
+        {
+            public decimal GetTotalPrice()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
+
     internal class Books
     {
         public int Amount { get; set; }
@@ -152,4 +172,6 @@ namespace ShoppingCartTests
         public decimal Price { get; set; }
     }
 }
+
+
 
