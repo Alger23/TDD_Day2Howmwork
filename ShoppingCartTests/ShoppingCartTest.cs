@@ -96,6 +96,41 @@ namespace ShoppingCartTests
             actualTotalPrice.Should().Be(expectedTotalPrice);
         }
 
+        [TestMethod]
+        public void Series_1_Buy_1_Series_2_Buy_1_Series_3_Buy_2_Total_Price_Should_Equal_370()
+        {
+            // Arrange
+            var targetShoppingCart = new ShoppingCart();
+            targetShoppingCart.Add(_bookshelves["1"], 1);
+            targetShoppingCart.Add(_bookshelves["2"], 1);
+            targetShoppingCart.Add(_bookshelves["3"], 2);
+
+            // Action
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 100 * 3 * 0.9m + 100;
+
+            // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
+        }
+
+        [TestMethod]
+        public void Series_1_Buy_1_Series_2_Buy_2_Series_3_Buy_2_Total_Price_Should_Equal_370()
+        {
+            // Arrange
+            var targetShoppingCart = new ShoppingCart();
+            targetShoppingCart.Add(_bookshelves["1"], 1);
+            targetShoppingCart.Add(_bookshelves["2"], 2);
+            targetShoppingCart.Add(_bookshelves["3"], 2);
+
+            // Action
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 100 * 3 * 0.9m + 100 * 2 * 0.95m;
+
+            // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
+        }
+
+
     }
 
     internal class ShoppingCart
