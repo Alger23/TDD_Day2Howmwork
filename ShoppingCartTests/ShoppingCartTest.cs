@@ -77,7 +77,16 @@ namespace ShoppingCartTests
         {
             public decimal GetTotalPrice()
             {
-                throw new NotImplementedException();
+                decimal discount = 1m;
+                switch (Count)
+                {
+                    case 1: discount = 1m;break;
+                    case 2: discount = 0.95m;break;
+                    case 3: discount = 0.9m;break;
+                    case 4: discount = 0.8m;break;
+                    case 5: discount = 0.75m;break;
+                }
+                return this.Sum(book => book.Price) * discount;
             }
         }
     }
