@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -42,7 +43,7 @@ namespace ShoppingCartTests
 
         internal decimal GetTotalPrice()
         {
-            throw new NotImplementedException();
+            return _cart.Sum(books => books.Amount * books.Info.Price);
         }
     }
     internal class Books
