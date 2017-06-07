@@ -12,13 +12,13 @@ namespace ShoppingCartTests
         private BookShelves _bookshelves = new BookShelves();
 
         [TestMethod]
-        public void Series_1_To_Buy_1_Total_Price_Should_Equal_To_100()
+        public void Series_1_Buy_1_Total_Price_Should_Equal_To_100()
         {
             // Arrange
             var targetShoppingCart = new ShoppingCart();
+            targetShoppingCart.Add(_bookshelves["1"], 1);
 
             // Action
-            targetShoppingCart.Add(_bookshelves["1"], 1);
             decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
             decimal expectedTotalPrice = 100;
             
@@ -27,20 +27,75 @@ namespace ShoppingCartTests
         }
 
         [TestMethod]
-        public void Series_1_To_Buy_1_And_Series_2_To_Buy_1_Total_Price_Should_Equal_190()
+        public void Series_1_Buy_1_And_Series_2_Buy_1_Total_Price_Should_Equal_190()
         {
             // Arrange
             var targetShoppingCart = new ShoppingCart();
-
-            // Action
             targetShoppingCart.Add(_bookshelves["1"], 1);
             targetShoppingCart.Add(_bookshelves["2"], 1);
+
+            // Action
             decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
             decimal expectedTotalPrice = 100 * 2 * 0.95m;
 
             // Assert
             actualTotalPrice.Should().Be(expectedTotalPrice);
         }
+
+        [TestMethod]
+        public void Series_1_Buy_1_Series_2_Buy_1_Series_3_Buy_1_Total_Price_Should_Equal_270()
+        {
+            // Arrange
+            var targetShoppingCart = new ShoppingCart();
+            targetShoppingCart.Add(_bookshelves["1"], 1);
+            targetShoppingCart.Add(_bookshelves["2"], 1);
+            targetShoppingCart.Add(_bookshelves["3"], 1);
+
+            // Action
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 100 * 3 * 0.9m;
+
+            // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
+        }
+
+        [TestMethod]
+        public void Series_1_Buy_1_Series_2_Buy_1_Series_3_Buy_1_Series_4_Buy_1_Total_Price_Should_Equal_320()
+        {
+            // Arrange
+            var targetShoppingCart = new ShoppingCart();
+            targetShoppingCart.Add(_bookshelves["1"], 1);
+            targetShoppingCart.Add(_bookshelves["2"], 1);
+            targetShoppingCart.Add(_bookshelves["3"], 1);
+            targetShoppingCart.Add(_bookshelves["4"], 1);
+
+            // Action
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 100 * 4 * 0.8m;
+
+            // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
+        }
+
+        [TestMethod]
+        public void Series_1_Buy_1_Series_2_Buy_1_Series_3_Buy_1_Series_4_Buy_1_Series_5_Buy_1_Total_Price_Should_Equal_375()
+        {
+            // Arrange
+            var targetShoppingCart = new ShoppingCart();
+            targetShoppingCart.Add(_bookshelves["1"], 1);
+            targetShoppingCart.Add(_bookshelves["2"], 1);
+            targetShoppingCart.Add(_bookshelves["3"], 1);
+            targetShoppingCart.Add(_bookshelves["4"], 1);
+            targetShoppingCart.Add(_bookshelves["5"], 1);
+
+            // Action
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 100 * 5 * 0.75m;
+
+            // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
+        }
+
     }
 
     internal class ShoppingCart
