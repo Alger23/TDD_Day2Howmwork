@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ShoppingCartTests
@@ -16,16 +17,38 @@ namespace ShoppingCartTests
             var targetShoppingCart = new ShoppingCart();
 
             // Action
-
+            targetShoppingCart.Add(_bookshelves["1"], 1);
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 100;
+            
             // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
         }
     }
 
     internal class ShoppingCart
     {
+        private List<Books> _cart;
+
         public ShoppingCart()
         {
+            _cart=new List<Books>();
         }
+
+        public void Add(BookInfo bookInfo, int amount)
+        {
+            _cart.Add(new Books { Info = bookInfo, Amount = amount });
+        }
+
+        internal decimal GetTotalPrice()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    internal class Books
+    {
+        public int Amount { get; set; }
+        public BookInfo Info { get; set; }
     }
 
     internal class BookShelves
@@ -43,7 +66,8 @@ namespace ShoppingCartTests
                         ISBN = "1",
                         Name = "HARRY POTTER AND THE SORCERER’S STONE",
                         SeriesOf = "Harry Potter",
-                        Position = 1
+                        Position = 1,
+                        Price = 100
                     }
                 },
                 {
@@ -53,7 +77,8 @@ namespace ShoppingCartTests
                         ISBN = "2",
                         Name = "HARRY POTTER AND THE CHAMBER OF SECRETS",
                         SeriesOf = "Harry Potter",
-                        Position = 2
+                        Position = 2,
+                        Price = 100
                     }
                 },
                 {
@@ -63,7 +88,8 @@ namespace ShoppingCartTests
                         ISBN = "3",
                         Name = "HARRY POTTER AND THE PRISONER OF AZKABAN",
                         SeriesOf = "Harry Potter",
-                        Position = 3
+                        Position = 3,
+                        Price = 100
                     }
                 },
                 {
@@ -73,7 +99,8 @@ namespace ShoppingCartTests
                         ISBN = "4",
                         Name = "HARRY POTTER AND THE GOBLET OF FIRE",
                         SeriesOf = "Harry Potter",
-                        Position = 4
+                        Position = 4,
+                        Price = 100
                     }
                 },
                 {
@@ -83,7 +110,8 @@ namespace ShoppingCartTests
                         ISBN = "5",
                         Name = "HARRY POTTER AND THE ORDER OF THE PHOENIX",
                         SeriesOf = "Harry Potter",
-                        Position = 2
+                        Position = 2,
+                        Price = 100
                     }
                 }
             };
@@ -104,6 +132,7 @@ namespace ShoppingCartTests
         public string Name { get; set; }
         public int Position { get; set; }
         public string SeriesOf { get; internal set; }
+        public decimal Price { get; set; }
     }
 }
 
