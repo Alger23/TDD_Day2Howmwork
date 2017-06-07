@@ -130,7 +130,19 @@ namespace ShoppingCartTests
             actualTotalPrice.Should().Be(expectedTotalPrice);
         }
 
+        [TestMethod]
+        public void None_Buy_Book_Total_Price_Should_Equal_0()
+        {
+            // Arrange
+            var targetShoppingCart = new ShoppingCart();
 
+            // Action
+            decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
+            decimal expectedTotalPrice = 0;
+
+            // Assert
+            actualTotalPrice.Should().Be(expectedTotalPrice);
+        }
     }
 
     internal class ShoppingCart
