@@ -21,7 +21,7 @@ namespace ShoppingCartTests
             // Action
             decimal actualTotalPrice = targetShoppingCart.GetTotalPrice();
             decimal expectedTotalPrice = 100;
-            
+
             // Assert
             actualTotalPrice.Should().Be(expectedTotalPrice);
         }
@@ -151,7 +151,7 @@ namespace ShoppingCartTests
 
         public ShoppingCart()
         {
-            _cart=new List<Books>();
+            _cart = new List<Books>();
         }
 
         public void Add(BookInfo bookInfo, int amount)
@@ -172,22 +172,23 @@ namespace ShoppingCartTests
                 }
             }
 
-            return booksSets.Sum(booksSet=> booksSet.GetTotalPrice());
+            return booksSets.Sum(booksSet => booksSet.GetTotalPrice());
         }
 
-        private class BooksSet: List<BookInfo>
+        private class BooksSet : List<BookInfo>
         {
+            private static Dictionary<int, decimal> discounts = new Dictionary<int, decimal>
+            {
+                {1, 1m},
+                {2, 0.95m},
+                {3, 0.9m},
+                {4, 0.8m},
+                {5, 0.75m},
+            };
+
             public decimal GetTotalPrice()
             {
-                decimal discount = 1m;
-                switch (Count)
-                {
-                    case 1: discount = 1m;break;
-                    case 2: discount = 0.95m;break;
-                    case 3: discount = 0.9m;break;
-                    case 4: discount = 0.8m;break;
-                    case 5: discount = 0.75m;break;
-                }
+                var discount = discounts[Count];
                 return this.Sum(book => book.Price) * discount;
             }
         }
